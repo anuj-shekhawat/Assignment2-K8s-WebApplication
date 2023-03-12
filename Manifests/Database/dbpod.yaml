@@ -13,6 +13,3 @@ spec:
           value: pwdanuj
       ports:
         - containerPort: 3306
-       
-        
-        
