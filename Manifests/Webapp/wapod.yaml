@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: podwap
+  name: podwap
+spec:
+  containers:
+  - image: 015092641389.dkr.ecr.us-east-1.amazonaws.com/webapp-ecr
+    name: podwap
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
