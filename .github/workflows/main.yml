@@ -43,7 +43,7 @@ jobs:
         sleep 10
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         
-    - name: Build, test, tag, and push image to Amazon ECR for database
+    - name: Build, test, tag, and push image to Amazon ECR for database-v2
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: db-ecr
@@ -83,7 +83,7 @@ jobs:
         sleep 10
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         
-      - name: Build, test, tag, and push image to Amazon ECR for webapp
+    - name: Build, test, tag, and push image to Amazon ECR for webapp-v2
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: webapp-ecr
