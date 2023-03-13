@@ -12,6 +12,6 @@ spec:
     - name: http
       port: 8080
       targetPort: 8080
-      nodeport: 3000
+      nodeport: 30000
   selector:
     app: webapp

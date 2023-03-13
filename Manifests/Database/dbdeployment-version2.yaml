@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: db-ecr
-          image: 015092641389.dkr.ecr.us-east-1.amazonaws.com/db-ecr:v0.1
+          image: 015092641389.dkr.ecr.us-east-1.amazonaws.com/db-ecr:v0.2
           env:
             - name: MYSQL_ROOT_PASSWORD
               value: pwdanuj
