@@ -42,6 +42,24 @@ jobs:
         echo "Pause for 10 seconds to let container start"
         sleep 10
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+      
+
+    - name: Build, test, tag, and push image to Amazon ECR for database-v2
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: db-ecr
+        IMAGE_TAG: v0.2
+      run: |
+        cd webapp/mysql/
+        ls -ltra
+        # Docker build
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        # Unit test
+        docker run -d -e MYSQL_ROOT_PASSWORD=pw $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        docker ps
+        echo "Pause for 10 seconds to let container start"
+        sleep 10
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         
 
         
@@ -50,6 +68,29 @@ jobs:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: webapp-ecr
         IMAGE_TAG: v0.1
+      run: |
+        cd webapp/webapp/
+        ls -ltra
+        # Docker build
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        # Unit test
+        export DBHOST=172.17.0.2
+        export DBPORT=3306
+        export DBUSER=root
+        export DATABASE=employees
+        export DBPWD=pw
+        export APP_COLOR=blue
+        docker run -d -p 8080:8080 -e DBHOST=$DBHOST -e DBPORT=$DBPORT -e APP_COLOR=blue -e DBUSER=$DBUSER -e DBPWD=$DBPWD $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        docker ps
+        echo "Pause for 10 seconds to let container start"
+        sleep 10
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        
+    - name: Build, test, tag, and push image to Amazon ECR for webapp-v2
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: webapp-ecr
+        IMAGE_TAG: v0.2
       run: |
         cd webapp/webapp/
         ls -ltra
